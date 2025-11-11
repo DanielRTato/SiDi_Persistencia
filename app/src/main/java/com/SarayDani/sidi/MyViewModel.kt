@@ -1,4 +1,4 @@
 package com.SarayDani.sidi
 
-class MyViewModel {
+class MyViewModel{
 }
