@@ -27,7 +27,7 @@ GameOver --> Idle
 
 1. El usuario pulsa **START**.
 2. Se genera un color y se añade a la secuencia.
-3. Se reproduce la secuencia (logs en esta versión).
+3. Se reproduce la secuencia.
 4. Es el turno del jugador para introducir la secuencia.
 5. Si acierta → nueva ronda, se añade un color y se repite el proceso.
 6. Si falla → aparece el **Game Over** y se puede reinicia
@@ -71,3 +71,25 @@ Contiene la clase `MyViewModel`, que extiende de `ViewModel` y maneja toda la **
 
 - **resetToInicio()**  
   Vuelve al estado `Inicio` y reinicia las secuencias y la ronda.
+
+---
+
+## Tests (unitarios / instrumented)
+
+Descripción breve de tests incluidos:
+
+- `testEmpezarJuego`  
+  Verifica que `empezarJuego()` inicializa `ronda` a 1, crea la primera entrada en `secuencia` y cambia el estado a `GenerarSecuencia`.
+
+- `testGenerarSecuencia`  
+  Comprueba que tras avanzar la reproducción y simular entradas correctas la secuencia aumenta correctamente.
+
+- `testAciertoSecuencia`  
+  Verifica que introducir el color correcto durante `IntroducirSecuencia` es aceptado y no provoca `GameOver`.
+
+- `testFalloSecuencia`  
+  Simula una pulsación incorrecta y comprueba que `estadoActual` pasa a `GameOver`.
+
+- `testRecord`  
+  Simula varias rondas con aciertos, fuerza un fallo y comprueba que `record` se actualiza.
+
