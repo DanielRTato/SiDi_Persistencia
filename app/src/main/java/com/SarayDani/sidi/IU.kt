@@ -57,7 +57,7 @@ fun IU(vm: MyViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("Récord: $record", color = Color.White, fontSize = 20.sp)
+                Text("Récord: ${record.score}", color = Color.White, fontSize = 20.sp) // Ahora es record.score
                 Text("Ronda: $ronda", color = Color.White, fontSize = 20.sp)
             }
         }
@@ -97,7 +97,7 @@ fun IU(vm: MyViewModel) {
     if (estado == Estados.GameOver) {
         GameOverDialog(
             rondaActual = ronda,
-            record = record,
+            record = record.score,
             onColorClick = { /* botones inactivos en esta pantalla */ },
             onPlayAgain = { vm.empezarJuego() },
             onClose = { vm.resetToInicio() }
