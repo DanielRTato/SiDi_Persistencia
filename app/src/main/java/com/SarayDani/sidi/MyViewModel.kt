@@ -21,7 +21,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG_LOG = "miDebug"
 
     private val repositorio: GuardarCargarRecord = // Instanciar la implementación concreta
-        ControladorPreference(application.applicationContext)
+        ControladorSQLite(application.applicationContext) //Ahora usamos ControladorSQLite
 
     val estadoActual = MutableStateFlow(Estados.Inicio)
     val secuencia = MutableStateFlow(mutableListOf<Int>())
