@@ -1,3 +1,20 @@
+# Tarea: SQLite en Andorid
+
+### EstructuraDB
+Objeto que define el esquema de la base de datos: el nombre de la tabla y sus columnas.
+
+### FeedReaderDbHelper.kt
+Clase que hereda de SQLiteOpenHelper. Se encarga de crear la base de datos (onCreate) y actualizarla si es necesario (onUpgrade).
+
+### ControladorSQLite
+Es la clase que implementa la interfaz GuardarCargarRecord. Define los métodos para guardar y cargar el récord utilizando la base de datos SQLite.
+
+### Cómo ver la Base de Datos
+Puedes ver la base de datos en tiempo real desde:
+View -> Tool Windows -> App Inspection y en el menú inferior selecciona la pestaña Database Inspector.
+
+![bdInspectorPNG.PNG](bdInspectorPNG.PNG)
+
 # Diagrama de Estados del Juego "Simón Dice"
 
 ```mermaid

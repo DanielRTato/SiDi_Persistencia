@@ -13,12 +13,21 @@ private const val SQL_CREATE_ENTRIES =
 
 private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${EstructuraBD.EntradaRecord.NOMBRE_TABLA}"
 
+/**
+ * Clase que gestiona y crea la base de datos
+ */
 class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
+    /**
+     * Crea la tabla en la base de datos
+     */
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
     }
 
+    /**
+     * Actualiza la base de datos si se cambia la versión
+     */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE_ENTRIES)
         onCreate(db)
@@ -29,7 +38,7 @@ class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     companion object {
-        const val DATABASE_VERSION = 1         // If you change the database schema, you must increment the database version.
+        const val DATABASE_VERSION = 1         // Si cambias el esquema de la BD, debes incrementar la versión
         const val DATABASE_NAME = "Sidi.db"
     }
 }

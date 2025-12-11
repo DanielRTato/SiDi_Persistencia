@@ -5,11 +5,17 @@ import android.content.Context
 import android.provider.BaseColumns
 import android.util.Log
 
+/**
+ * Implementación de GuardarCargarRecord que utiliza SQLite para almacenar y recuperar el récord del juego.
+ */
 class ControladorSQLite(context: Context) : GuardarCargarRecord {
 
     private val dbHelper = FeedReaderDbHelper(context)
     private val TAG = "SQLite"
 
+    /**
+     * Consulta la base de datos SQLite para obtener el récord
+     */
     override fun recogerRecord(): RecordJuego {
         val db = dbHelper.readableDatabase
 
@@ -18,7 +24,7 @@ class ControladorSQLite(context: Context) : GuardarCargarRecord {
             EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_FECHA
         )
 
-        val sortOrder = "${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION} DESC"
+        val sortOrder = "${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION} DESC" // Orden descendente para obtener el mayor
 
         val cursor = db.query(
             EstructuraBD.EntradaRecord.NOMBRE_TABLA,   // La tabla a consultar
@@ -45,7 +51,6 @@ class ControladorSQLite(context: Context) : GuardarCargarRecord {
 
         return record
     }
-
 
     override fun guardarRecord(nuevoRecord: RecordJuego) {
         val db = dbHelper.writableDatabase
