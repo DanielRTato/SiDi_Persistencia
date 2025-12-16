@@ -1,9 +1,10 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.controller
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
+import com.SarayDani.sidi.controller.EstructuraBD
 
 private const val SQL_CREATE_ENTRIES =
     "CREATE TABLE ${EstructuraBD.EntradaRecord.NOMBRE_TABLA} (" +

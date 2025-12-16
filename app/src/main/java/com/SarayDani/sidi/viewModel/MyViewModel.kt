@@ -1,10 +1,14 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.viewModel
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.SarayDani.sidi.controller.ControladorSQLite
+import com.SarayDani.sidi.model.Estados
+import com.SarayDani.sidi.controller.GuardarCargarRecord
+import com.SarayDani.sidi.controller.room.ControladorRoom
+import com.SarayDani.sidi.model.RecordJuego
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +25,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG_LOG = "miDebug"
 
     private val repositorio: GuardarCargarRecord = // Instanciar la implementación concreta
-        ControladorSQLite(application.applicationContext) //Ahora usamos ControladorSQLite
+        ControladorRoom(application.applicationContext) //Ahora usamos ControladorRoom
 
     val estadoActual = MutableStateFlow(Estados.Inicio)
     val secuencia = MutableStateFlow(mutableListOf<Int>())
@@ -31,7 +35,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     val record = MutableStateFlow(
         RecordJuego(0, "") //
 
-        )
+    )
 
     // Duraciones para animaciones de luz
     private val duracionEncendido = 500L
@@ -165,4 +169,3 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
-

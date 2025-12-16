@@ -1,4 +1,4 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.controller
 
 import android.provider.BaseColumns
 

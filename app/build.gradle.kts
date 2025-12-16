@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+    val room_version = "2.8.4" // Definido aquí para usar en las dos dependencias de Room
+    implementation("androidx.room:room-runtime:${room_version}") // Dependencia de tiempo de ejecución de Room
+    annotationProcessor("androidx.room:room-compiler:$room_version") // Procesador de anotaciones para Room
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

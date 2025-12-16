@@ -1,6 +1,6 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.controller
 
-import java.util.Date
+import com.SarayDani.sidi.model.RecordJuego
 
 /**
  * Interfaz para guardar y cargar el récord del juego.

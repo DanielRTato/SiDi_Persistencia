@@ -1,9 +1,11 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.controller
 
 import android.content.ContentValues
 import android.content.Context
-import android.provider.BaseColumns
 import android.util.Log
+import com.SarayDani.sidi.controller.EstructuraBD
+import com.SarayDani.sidi.controller.GuardarCargarRecord
+import com.SarayDani.sidi.model.RecordJuego
 
 /**
  * Implementación de GuardarCargarRecord que utiliza SQLite para almacenar y recuperar el récord del juego.

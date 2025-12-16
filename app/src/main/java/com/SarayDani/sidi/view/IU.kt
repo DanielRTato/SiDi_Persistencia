@@ -1,4 +1,4 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.view
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -23,6 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.SarayDani.sidi.model.Colores
+import com.SarayDani.sidi.model.Colores_luz
+import com.SarayDani.sidi.model.Estados
+import com.SarayDani.sidi.viewModel.MyViewModel
 
 @Composable
 fun IU(vm: MyViewModel) {
