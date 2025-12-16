@@ -4,10 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.SarayDani.sidi.controller.ControladorSQLite
 import com.SarayDani.sidi.model.Estados
-import com.SarayDani.sidi.controller.GuardarCargarRecord
-import com.SarayDani.sidi.controller.room.ControladorRoom
+import com.SarayDani.sidi.data.GuardarCargarRecord
+import com.SarayDani.sidi.data.room.ControladorRoom
 import com.SarayDani.sidi.model.RecordJuego
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

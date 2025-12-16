@@ -1,4 +1,4 @@
-package com.SarayDani.sidi.controller
+package com.SarayDani.sidi.data
 
 import com.SarayDani.sidi.model.RecordJuego
 

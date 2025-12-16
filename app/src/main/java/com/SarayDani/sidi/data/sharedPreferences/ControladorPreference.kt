@@ -1,7 +1,7 @@
-package com.SarayDani.sidi.controller
+package com.SarayDani.sidi.data.sharedPreferences
 
 import android.content.Context
-import com.SarayDani.sidi.controller.GuardarCargarRecord
+import com.SarayDani.sidi.data.GuardarCargarRecord
 import com.SarayDani.sidi.model.RecordJuego
 
 /**

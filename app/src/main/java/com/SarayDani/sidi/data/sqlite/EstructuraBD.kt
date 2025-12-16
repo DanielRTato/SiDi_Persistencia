@@ -1,4 +1,4 @@
-package com.SarayDani.sidi.controller
+package com.SarayDani.sidi.data.sqlite
 
 import android.provider.BaseColumns
 

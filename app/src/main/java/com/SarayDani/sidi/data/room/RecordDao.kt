@@ -1,4 +1,4 @@
-package com.SarayDani.sidi.controller.room
+package com.SarayDani.sidi.data.room
 
 import androidx.room.Dao
 import androidx.room.Delete

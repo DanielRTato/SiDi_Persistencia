@@ -1,9 +1,9 @@
-package com.SarayDani.sidi.controller.room
+package com.SarayDani.sidi.data.room
 
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.SarayDani.sidi.controller.GuardarCargarRecord
+import com.SarayDani.sidi.data.GuardarCargarRecord
 import com.SarayDani.sidi.model.RecordJuego
 
 class ControladorRoom(context: Context) : GuardarCargarRecord {
@@ -12,12 +12,12 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         context.applicationContext,
         AppDatabase::class.java,
         "SidiRoom.db"
-    ).allowMainThreadQueries().build()
+    ).allowMainThreadQueries().build() // Permitimos consultas en el hilo principal para simplificar
 
     private val TAG = "ROOM_DB"
 
     /**
-     * LEER: Convierte de Base de Datos (Entidad) -> Juego (Modelo)
+     *
      */
     override fun recogerRecord(): RecordJuego {
         val entidad: EntidadRecord? = db.recordDao().getRecordMaximo()
@@ -32,7 +32,7 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
     }
 
     /**
-     * GUARDAR: Convierte de Juego (Modelo) -> Base de Datos (Entidad)
+     *
      */
     override fun guardarRecord(nuevoRecord: RecordJuego) {
         // Mapeo manual: Creamos una Entidad nueva con los datos del juego

@@ -1,10 +1,9 @@
-package com.SarayDani.sidi.controller
+package com.SarayDani.sidi.data.sqlite
 
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import com.SarayDani.sidi.controller.EstructuraBD
-import com.SarayDani.sidi.controller.GuardarCargarRecord
+import com.SarayDani.sidi.data.GuardarCargarRecord
 import com.SarayDani.sidi.model.RecordJuego
 
 /**
