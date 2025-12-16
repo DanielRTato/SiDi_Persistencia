@@ -8,7 +8,6 @@ import com.SarayDani.sidi.model.RecordJuego
 
 class ControladorRoom(context: Context) : GuardarCargarRecord {
 
-    // Inicializamos Room
     private val db = Room.databaseBuilder(
         context.applicationContext,
         AppDatabase::class.java,
@@ -18,33 +17,31 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
     private val TAG = "ROOM_DB"
 
     /**
-     * TRADUCCIÓN: De Entidad (BD) a Modelo (Juego)
+     * LEER: Convierte de Base de Datos (Entidad) -> Juego (Modelo)
      */
     override fun recogerRecord(): RecordJuego {
         val entidad: EntidadRecord? = db.recordDao().getRecordMaximo()
 
         return if (entidad != null) {
             Log.d(TAG, "Record recuperado: ${entidad.puntuacion}")
-            // Mapeamos los datos
+            // Mapeo manual: Pasamos los datos de la Entidad al RecordJuego
             RecordJuego(entidad.puntuacion, entidad.fecha)
         } else {
-            Log.d(TAG, "No hay datos, devolviendo vacío")
             RecordJuego(0, "")
         }
     }
 
     /**
-     * TRADUCCIÓN: De Modelo (Juego) a Entidad (BD)
+     * GUARDAR: Convierte de Juego (Modelo) -> Base de Datos (Entidad)
      */
     override fun guardarRecord(nuevoRecord: RecordJuego) {
-        // Creamos la entidad a partir del objeto del juego
+        // Mapeo manual: Creamos una Entidad nueva con los datos del juego
         val nuevaEntidad = EntidadRecord(
             puntuacion = nuevoRecord.score,
             fecha = nuevoRecord.fecha
         )
 
-        // Guardamos la entidad
         db.recordDao().insert(nuevaEntidad)
-        Log.d(TAG, "Record convertido y guardado en Room: ${nuevoRecord.score}")
+        Log.d(TAG, "Guardado en Room. Puntos: ${nuevoRecord.score}")
     }
 }

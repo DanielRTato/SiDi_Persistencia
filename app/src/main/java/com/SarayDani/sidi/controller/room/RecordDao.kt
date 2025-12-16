@@ -7,15 +7,16 @@ import androidx.room.Query
 
 @Dao
 interface RecordDao {
-    @Query("select * from tabla_records")
-    fun getAll(): List<RecordDao>
+    @Query("SELECT * FROM tabla_records")
+    fun getAll(): List<EntidadRecord>
 
-     @Delete
-     fun delete(record: EntidadRecord)
+    @Delete
+    fun delete(record: EntidadRecord)
 
-     @Insert
-     fun insert(record: EntidadRecord)
+    @Insert
+    fun insert(record: EntidadRecord)
 
-     @Query("select * from tabla_records order by puntuacion desc limit 1")
-     fun getRecordMaximo(): EntidadRecord?
+    // Devuelve la entidad con mayor puntuación
+    @Query("SELECT * FROM tabla_records ORDER BY puntuacion DESC LIMIT 1")
+    fun getRecordMaximo(): EntidadRecord?
 }

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt") // Este plugin es obligatorio para que funcione Room con Kotlin
 }
 
 android {
@@ -43,9 +44,25 @@ android {
 }
 
 dependencies {
-    val room_version = "2.8.4" // Definido aquí para usar en las dos dependencias de Room
-    implementation("androidx.room:room-runtime:${room_version}") // Dependencia de tiempo de ejecución de Room
-    annotationProcessor("androidx.room:room-compiler:$room_version") // Procesador de anotaciones para Room
+    // CORRECCIÓN 1: Usamos la versión estable 2.6.1
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // CORRECCIÓN 2: Usamos 'kapt' en lugar de 'annotationProcessor'
+    kapt("androidx.room:room-compiler:$room_version")
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // Opcionales de Room (los he mantenido como los tenías)
+    implementation("androidx.room:room-rxjava2:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    implementation("androidx.room:room-guava:$room_version")
+    testImplementation("androidx.room:room-testing:$room_version")
+    implementation("androidx.room:room-paging:$room_version")
+
+    // Resto de dependencias de Android y Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -61,7 +78,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-    testImplementation("org.robolectric:robolectric:4.11.2") // Para que funcione Log.d en JVM
+    testImplementation("org.robolectric:robolectric:4.11.2")
 
     // --- TEST ANDROID INSTRUMENTED ---
     androidTestImplementation(libs.androidx.junit)
