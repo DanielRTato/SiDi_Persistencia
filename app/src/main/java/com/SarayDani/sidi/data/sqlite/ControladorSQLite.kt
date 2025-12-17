@@ -39,6 +39,7 @@ class ControladorSQLite(context: Context) : GuardarCargarRecord {
 
         var record = RecordJuego(0, "")
 
+        // Solo interesa el primer resultado porque es el mayor
         with(cursor) {
             if (moveToFirst()) {
                 val score = getInt(getColumnIndexOrThrow(EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION))
@@ -48,22 +49,26 @@ class ControladorSQLite(context: Context) : GuardarCargarRecord {
                 Log.d(TAG, "Record leído: $score - $fecha")
             }
         }
-        cursor.close()
+        cursor.close() // Cerrar el cursor para liberar recursos
 
         return record
     }
 
+    /**
+     * Guarda un nuevo récord en la base de datos SQLite.
+     */
     override fun guardarRecord(nuevoRecord: RecordJuego) {
         val db = dbHelper.writableDatabase
 
 
+        // Crea un mapa, el nombre de las columnas es la clave y el valor a insertar es el valor
         val values = ContentValues().apply {
             put(EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION, nuevoRecord.score)
             put(EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_FECHA, nuevoRecord.fecha)
         }
 
 
-        val newRowId = db.insert(EstructuraBD.EntradaRecord.NOMBRE_TABLA, null, values)
+        val newRowId = db.insert(EstructuraBD.EntradaRecord.NOMBRE_TABLA, null, values) // Inserta la nueva fila
 
         Log.d(TAG, "Nueva fila insertada con ID: $newRowId")
     }

@@ -6,6 +6,10 @@ import androidx.room.Room
 import com.SarayDani.sidi.data.GuardarCargarRecord
 import com.SarayDani.sidi.model.RecordJuego
 
+/**
+ * Controlador para gestionar el almacenamiento y recuperación del récord del juego
+ * utilizando la base de datos Room.
+ */
 class ControladorRoom(context: Context) : GuardarCargarRecord {
 
     private val db = Room.databaseBuilder(
@@ -14,10 +18,10 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         "SidiRoom.db"
     ).allowMainThreadQueries().build() // Permitimos consultas en el hilo principal para simplificar
 
-    private val TAG = "ROOM_DB"
+    private val TAG = "tag_room"
 
     /**
-     *
+     * Recoge el récord guardado en la base de datos Room.
      */
     override fun recogerRecord(): RecordJuego {
         val entidad: EntidadRecord? = db.recordDao().getRecordMaximo()
@@ -32,7 +36,7 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
     }
 
     /**
-     *
+     * Guarda un nuevo récord en la base de datos Room.
      */
     override fun guardarRecord(nuevoRecord: RecordJuego) {
         // Mapeo manual: Creamos una Entidad nueva con los datos del juego
@@ -42,6 +46,6 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         )
 
         db.recordDao().insert(nuevaEntidad)
-        Log.d(TAG, "Guardado en Room. Puntos: ${nuevoRecord.score}")
+        Log.d(TAG, "Guardado. Puntos: ${nuevoRecord.score}")
     }
 }

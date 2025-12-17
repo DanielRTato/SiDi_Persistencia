@@ -1,3 +1,20 @@
+# Tarea: Room en Android
+### EndidadRecord
+Representa la tabla tabla_record en la base de datos. Define las Columnas y la clave primaria.
+
+### RecordDao
+Interfaz que define los métodos para utilizar en la base de datos. Al utilizar Room,
+no hace falta escribir la QUERY SQL, ya que Room lo genera automáticamente.
+
+### AppDatabase
+Clase abstracta que hereda de RoomDatabase. Define la base de datos y sus entidades.
+
+### ControladorRoom
+Clase que implementa la inferfaz GuardarCargarRecord. Define los métodos para guardar y cargar el récord utilizando Room.
+Convierte los objetos EntidadRecord(el formato de la base de datos) a RecordJuegos(formato del juego) o viceversa.
+
+-----
+
 # Tarea: SQLite en Andorid
 
 ### EstructuraDB
