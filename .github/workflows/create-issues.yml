@@ -1,0 +1,145 @@
+name: Create GitHub Issues from Markdown Files
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (print without creating issues)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: features/mongodb
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Create issues from markdown files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 << 'EOF'
+          import os
+          import re
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          ISSUES_DIR = ".github/issues"
+          REPO = "${{ github.repository }}"
+          DRY_RUN = "${{ github.event.inputs.dry_run }}" == "true"
+
+          def parse_frontmatter(content):
+              """Parse YAML frontmatter from markdown content."""
+              pattern = r'^---\s*\n(.*?)\n---\s*\n(.*)$'
+              match = re.match(pattern, content, re.DOTALL)
+              
+              if not match:
+                  return {}, content
+              
+              frontmatter_text = match.group(1)
+              body = match.group(2)
+              
+              frontmatter = {}
+              for line in frontmatter_text.split('\n'):
+                  if ':' in line:
+                      key, value = line.split(':', 1)
+                      key = key.strip()
+                      value = value.strip().strip('"')
+                      frontmatter[key] = value
+              
+              return frontmatter, body
+
+          def parse_tags_list(tags_str):
+              """Parse a tags list from frontmatter format."""
+              if not tags_str:
+                  return []
+              tags_str = tags_str.strip('[]')
+              tags = [tag.strip().strip('"').strip("'") for tag in tags_str.split(',')]
+              return [tag for tag in tags if tag]
+
+          def create_issue(filepath):
+              """Create a GitHub issue from a markdown file."""
+              with open(filepath, 'r', encoding='utf-8') as f:
+                  content = f.read()
+              
+              frontmatter, body = parse_frontmatter(content)
+              
+              title = frontmatter.get('post_title', f"Issue from {filepath.name}")
+              tags = parse_tags_list(frontmatter.get('tags', ''))
+              categories = parse_tags_list(frontmatter.get('categories', ''))
+              
+              labels = tags + categories
+              
+              print(f"{'[DRY RUN] ' if DRY_RUN else ''}Creating issue: {title}")
+              
+              if DRY_RUN:
+                  print(f"  Labels: {', '.join(labels) if labels else 'none'}")
+                  print(f"  Body length: {len(body)} characters")
+                  return True
+              
+              cmd = ['gh', 'issue', 'create', '--repo', REPO, '--title', title, '--body', body]
+              
+              if labels:
+                  for label in labels:
+                      cmd.extend(['--label', label])
+              
+              try:
+                  result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+                  issue_url = result.stdout.strip()
+                  print(f"✓ Successfully created: {issue_url}")
+                  return True
+              except subprocess.CalledProcessError as e:
+                  print(f"✗ Failed to create issue: {title}")
+                  print(f"  Error: {e.stderr}")
+                  return False
+
+          def main():
+              """Main function to process all issue files."""
+              issues_path = Path(ISSUES_DIR)
+              if not issues_path.exists():
+                  print(f"Error: Directory {ISSUES_DIR} does not exist")
+                  sys.exit(1)
+              
+              issue_files = sorted(issues_path.glob("*.md"))
+              
+              if not issue_files:
+                  print(f"No markdown files found in {ISSUES_DIR}")
+                  sys.exit(0)
+              
+              print(f"Found {len(issue_files)} issue files to process")
+              if DRY_RUN:
+                  print("=== DRY RUN MODE - No issues will be created ===")
+              print()
+              
+              success_count = 0
+              fail_count = 0
+              
+              for filepath in issue_files:
+                  if create_issue(filepath):
+                      success_count += 1
+                  else:
+                      fail_count += 1
+                  print()
+              
+              print(f"Summary: {success_count} issues {'would be' if DRY_RUN else ''} created, {fail_count} failed")
+
+          if __name__ == "__main__":
+              main()
+          EOF
