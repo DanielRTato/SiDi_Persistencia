@@ -7,6 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface RecordDao {
+
     @Query("SELECT * FROM tabla_records")
     fun getAll(): List<EntidadRecord>
 
