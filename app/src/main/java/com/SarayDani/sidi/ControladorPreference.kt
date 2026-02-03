@@ -37,7 +37,5 @@ class ControladorPreference(private val context: Context): GuardarCargarRecord {
         editor.putInt(KEY_RECORD, nuevoRecord.score)
         editor.putString(KEY_FECHA, nuevoRecord.fecha)
         editor.apply() // guarda los cambios de forma asíncrona e imediata
-        }
     }
-
-
+}
