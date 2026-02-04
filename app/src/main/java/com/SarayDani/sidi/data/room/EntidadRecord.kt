@@ -13,5 +13,6 @@ data class EntidadRecord(
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "puntuacion") val puntuacion: Int,
-    @ColumnInfo(name = "fecha") val fecha: String
+    @ColumnInfo(name = "fecha") val fecha: String,
+    @ColumnInfo(name = "nombre") val nombre: String = ""
 )

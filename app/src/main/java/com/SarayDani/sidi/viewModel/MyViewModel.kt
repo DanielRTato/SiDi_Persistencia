@@ -23,6 +23,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     // Tag para los logs
     private val TAG_LOG = "miDebug"
 
+
+    private val nombreJugador = "Saray" // Nombre del jugador como variable
+
     private val repositorio: GuardarCargarRecord = // Instanciar la implementación concreta
         ControladorRoom(application.applicationContext) //Ahora usamos ControladorRoom
 
@@ -144,7 +147,8 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             // Creamos el nuevo objeto con la puntuación y la fecha actual
             val nuevoRecord = RecordJuego(
                 score = puntuacionActual,
-                fecha = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+                fecha = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date()),
+                nombre = nombreJugador
             )
 
             repositorio.guardarRecord(nuevoRecord)  // Si el nuevo record es mejo se guarda
