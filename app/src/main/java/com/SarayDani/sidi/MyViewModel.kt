@@ -128,29 +128,28 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * Termina el juego y actualiza récord si corresponde.
+     * Termina el juego y guarda en el top 10 si corresponde.
      */
     private fun gameOver() {
         estadoActual.value = Estados.GameOver
 
-        // CAMBIO 5: Lógica de guardar récord
-        val puntuacionActual = ronda.value
-        val recordActual = record.value.score
+        // Crear el nuevo record con la puntuación actual y fecha
+        val nuevoRecord = RecordJuego(
+            score = ronda.value,
+            fecha = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+        )
 
-        if (puntuacionActual > recordActual) {
-            // Creamos el nuevo objeto con la puntuación y la fecha actual
-            val nuevoRecord = RecordJuego(
-                score = puntuacionActual,
-                fecha = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-            )
+        val entraEnTop10 = repositorio.guardarTop10(nuevoRecord)
 
-            repositorio.guardarRecord(nuevoRecord)  // Si el nuevo record es mejo se guarda
+        if (entraEnTop10) {
+            Log.d(TAG_LOG, "¡Enhorabuena! Tu puntuación (${ronda.value}) forma parte de los 10 primeros")
 
-            // Actualizamos el estado para la UI
-            record.value = nuevoRecord
-            botonEncendido.value = null // apagar luces por si acaso
-            Log.d(TAG_LOG, "GAME OVER. Ronda alcanzada: ${ronda.value}")
+            // Actualizar el record mostrado en la UI
+            record.value = repositorio.recogerRecord()
         }
+
+        botonEncendido.value = null
+        Log.d(TAG_LOG, "GAME OVER. Ronda alcanzada: ${ronda.value}")
     }
 
         /**

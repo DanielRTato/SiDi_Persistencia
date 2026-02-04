@@ -66,4 +66,49 @@ class ControladorSQLite(context: Context) : GuardarCargarRecord {
 
         Log.d(TAG, "Nueva fila insertada con ID: $newRowId")
     }
+
+
+    override fun guardarTop10(nuevoRecord: RecordJuego): Boolean {
+        val db = dbHelper.writableDatabase
+
+        // Contar cuántos hay antes de insertar
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM ${EstructuraBD.EntradaRecord.NOMBRE_TABLA}", null)
+        cursor.moveToFirst()
+        val total = cursor.getInt(0)
+        cursor.close()
+
+        // Si hay menos de 10, insertar directamente
+        if (total < 10) {
+            guardarRecord(nuevoRecord)
+            Log.d(TAG, "Nuevo record! Formas parte del top 10!")
+            return true
+        }
+
+        // Obtener la puntuación del peor record
+        val cursorPeor = db.rawQuery(
+            "SELECT ${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION} " +
+            "FROM ${EstructuraBD.EntradaRecord.NOMBRE_TABLA} " +
+            "ORDER BY ${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION} ASC, " +
+            "${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_FECHA} DESC LIMIT 1", null
+        )
+        cursorPeor.moveToFirst()
+        val peorPuntuacion = cursorPeor.getInt(0)
+        cursorPeor.close()
+
+        // SOlo si la nueva puntuación supera al peor la reemplaza
+        if (nuevoRecord.score > peorPuntuacion) {
+            // Borrar el peor
+            db.execSQL(
+                "DELETE FROM ${EstructuraBD.EntradaRecord.NOMBRE_TABLA} WHERE ${BaseColumns._ID} = (" +
+                "SELECT ${BaseColumns._ID} FROM ${EstructuraBD.EntradaRecord.NOMBRE_TABLA} " +
+                "ORDER BY ${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_PUNTUACION} ASC, " +
+                "${EstructuraBD.EntradaRecord.NOMBRE_COLUMNA_FECHA} DESC LIMIT 1)"
+            )
+            guardarRecord(nuevoRecord)
+            Log.d(TAG, "Nuevo record! Formas parte del top 10!")
+            return true
+        }
+
+        return false
+    }
 }

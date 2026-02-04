@@ -38,6 +38,10 @@ class ControladorPreference(private val context: Context): GuardarCargarRecord {
         editor.putString(KEY_FECHA, nuevoRecord.fecha)
         editor.apply() // guarda los cambios de forma asíncrona e imediata
         }
+
+    override fun guardarTop10(nuevoRecord: RecordJuego): Boolean {
+        TODO("Not yet implemented")
     }
+}
 
 
