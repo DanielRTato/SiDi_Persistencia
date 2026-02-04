@@ -16,4 +16,11 @@ interface GuardarCargarRecord {
      * Guarda un nuevo récord para la persistencia.
      */
     fun guardarRecord(nuevoRecord: RecordJuego)
+
+
+    /**
+     * Nuevo métdo para guardar un récord en el top 10.
+     * @return true si el record entró en el top 10, false si no
+     */
+    fun guardarTop10(nuevoRecord: RecordJuego): Boolean
 }
