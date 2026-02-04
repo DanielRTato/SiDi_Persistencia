@@ -61,7 +61,7 @@ fun IU(vm: MyViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("Récord: ${record.score}", color = Color.White, fontSize = 20.sp) // Ahora es record.score
+                Text("Récord: ${record.score} (${record.nombre})", color = Color.White, fontSize = 20.sp)
                 Text("Ronda: $ronda", color = Color.White, fontSize = 20.sp)
             }
         }
@@ -102,7 +102,7 @@ fun IU(vm: MyViewModel) {
         GameOverDialog(
             rondaActual = ronda,
             record = record.score,
-            onColorClick = { /* botones inactivos en esta pantalla */ },
+            nombreRecord = record.nombre,
             onPlayAgain = { vm.empezarJuego() },
             onClose = { vm.resetToInicio() }
         )
@@ -115,7 +115,7 @@ fun IU(vm: MyViewModel) {
 fun GameOverDialog(
     rondaActual: Int,
     record: Int,
-    onColorClick: (Int) -> Unit,
+    nombreRecord: String,
     onPlayAgain: () -> Unit,
     onClose: () -> Unit
 ) {
@@ -141,7 +141,7 @@ fun GameOverDialog(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "Tu récord es: $record",
+                    "Récord: $record ($nombreRecord)",
                     fontSize = 18.sp,
                     color = Color(0xFFFDFBF6)
                 )

@@ -16,7 +16,9 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         context.applicationContext,
         AppDatabase::class.java,
         "SidiRoom.db"
-    ).allowMainThreadQueries().build() // Permitimos consultas en el hilo principal para simplificar
+    ).allowMainThreadQueries()
+     .fallbackToDestructiveMigration() // Borrar la BD porque cambiamos de version
+     .build()
 
     private val TAG = "tag_room"
 
@@ -29,9 +31,9 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         return if (entidad != null) {
             Log.d(TAG, "Record recuperado: ${entidad.puntuacion}")
             // Mapeo manual: Pasamos los datos de la Entidad al RecordJuego
-            RecordJuego(entidad.puntuacion, entidad.fecha)
+            RecordJuego(entidad.puntuacion, entidad.fecha, entidad.nombre)
         } else {
-            RecordJuego(0, "")
+            RecordJuego(0, "", "")
         }
     }
 
@@ -42,7 +44,8 @@ class ControladorRoom(context: Context) : GuardarCargarRecord {
         // Mapeo manual: Creamos una Entidad nueva con los datos del juego
         val nuevaEntidad = EntidadRecord(
             puntuacion = nuevoRecord.score,
-            fecha = nuevoRecord.fecha
+            fecha = nuevoRecord.fecha,
+            nombre = nuevoRecord.nombre
         )
 
         db.recordDao().insert(nuevaEntidad)

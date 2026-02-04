@@ -10,8 +10,7 @@ import androidx.room.Entity
  */
 @Entity
 data class RecordJuego(
-    var score: Int = 0, // Puntuación del récord
-    var fecha: String = "" // Fecha del record
-) {
-
-}
+    var score: Int = 0,      // Puntuación del récord
+    var fecha: String = "",  // Fecha del record
+    var nombre: String = ""  // Nombre del jugador
+)
