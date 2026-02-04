@@ -1,4 +1,4 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.model
 
 import androidx.compose.ui.graphics.Color
 

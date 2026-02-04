@@ -1,4 +1,4 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.data.sqlite
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

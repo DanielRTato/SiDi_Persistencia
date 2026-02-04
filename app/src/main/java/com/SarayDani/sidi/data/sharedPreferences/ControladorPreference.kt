@@ -1,6 +1,8 @@
-package com.SarayDani.sidi
+package com.SarayDani.sidi.data.sharedPreferences
 
 import android.content.Context
+import com.SarayDani.sidi.data.GuardarCargarRecord
+import com.SarayDani.sidi.model.RecordJuego
 
 /**
  * Implementación de GuardarCargarRecord usando SharedPreferences.
@@ -39,5 +41,3 @@ class ControladorPreference(private val context: Context): GuardarCargarRecord {
         editor.apply() // guarda los cambios de forma asíncrona e imediata
         }
     }
-
-

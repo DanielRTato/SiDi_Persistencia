@@ -1,0 +1,4 @@
+- Escribe la mensaje en Castellano
+- Escribe siempre un titulo claro y descriptivo y luego el mensaje del commit
+- El título debe resumir el cambio principal realizado en el commit
+- El mensaje debe explicar en detalle qué se ha cambiado y por qué

@@ -1,5 +1,6 @@
 package com.SarayDani.sidi
 
+import com.SarayDani.sidi.model.RecordJuego
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
